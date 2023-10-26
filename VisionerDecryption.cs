@@ -4,21 +4,32 @@ namespace ConsoleApp1
 {
     public class VisionerDecryption
     {
+        //Частотный индекс
         double IndexCount = 0.0553;
+        //Алфавит
         string alphabit = "АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ";
+        //Строка введенная пользователем
         string s;
+        //Длина ключа
         int KeyLenght;
+        //Итоговая длина ключа
         int KeyLenghtResult;
+        //Частотный индекс текста с ключем Key
         double KeyLenghtVer;
+        //Группы строк исходя из длины ключа, согласно алгоритму
         string[] sGroaps;
-        string Key;
+        //Ключ
+        string Key = "";
+
+        //Конструктор
         public VisionerDecryption(string s)
         {
             this.s = TextToStandart(s);
-            Decryption();
+            
 
         }
-        void Decryption()
+        //Метод осуществляющий дешифровку
+        public void Decryption()
         {
             //то же самое
             KeyLenght = 2;
@@ -27,9 +38,9 @@ namespace ConsoleApp1
             {
                 KeyLenght++;
                 counter++;
-                if (counter == 12) { break; }
+                if (counter == 8) { break; }
             }
-            Console.WriteLine($"Длина ключа {KeyLenghtResult} вероятность {KeyLenghtVer}");
+            Console.WriteLine($"Длина ключа {KeyLenghtResult} частотная вероятность {KeyLenghtVer}");
             sGroaps = StringToGroap(KeyLenghtResult);
 
             counter = 1;
@@ -47,7 +58,11 @@ namespace ConsoleApp1
                 }
                 else
                 {
-                    Key += alphabit[alphabit.IndexOf(a) + 33 - alphabit.IndexOf("О")];
+                    try
+                    {
+                        Key += alphabit[alphabit.IndexOf(a) + 33 - alphabit.IndexOf("О")];
+                    }
+                    catch { Key += "А"; }
                 }
 
 
@@ -60,6 +75,9 @@ namespace ConsoleApp1
 
 
         }
+        //Проверяет частотный индекс переданной строки с константным
+        //если получившийся индекс выше константного, возвращает true, иначе false
+        //Промежуточно записывает длину ключа в поле класса, если полученный результат ближе к константному
         bool IndexCountCheck(string str)
         {
             if (KeyLenght == 0) { return false; }
@@ -74,6 +92,8 @@ namespace ConsoleApp1
             return result >= IndexCount ? true : false;
 
         }
+        //Принимает в себя предпологаемый размер ключа и исходя из этого возвращает строку
+        //с каждым n-ым символом согласно алгоритму
         string StringReturn(int n)
         {
             StringBuilder stroka = new StringBuilder();
@@ -83,6 +103,7 @@ namespace ConsoleApp1
             }
             return stroka.ToString();
         }
+        //Распределяет строку на группы строк, согласно алгоритму, возвращает массив строк
         string[] StringToGroap(int n)
         {
             string[] str = new string[n];
@@ -98,6 +119,7 @@ namespace ConsoleApp1
             }
             return str;
         }
+        //Находит самый встречающийся символ в строке
         string MaxVer(string str)
         {
             int result = 0;
@@ -112,6 +134,7 @@ namespace ConsoleApp1
             }
             return resultA.ToString();
         }
+        //Приводит текст к стандартному виду
         string TextToStandart(string str)
         {
             string strBuff = str.ToUpper();
