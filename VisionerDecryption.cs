@@ -5,9 +5,9 @@ namespace ConsoleApp1
     public class VisionerDecryption
     {
         //Частотный индекс
-        double IndexCount = 0.0553;
+        const double IndexCount = 0.0553;
         //Алфавит
-        string alphabit = "АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ";
+        const string alphabit = "АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ";
         //Строка введенная пользователем
         string s;
         //Длина ключа
